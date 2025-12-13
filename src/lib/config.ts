@@ -63,7 +63,7 @@ export async function getConfig(): Promise<GlobalConfig> {
  * Deep merge two config objects
  * The second object's values override the first
  */
-function mergeConfig(
+export function mergeConfig(
   defaults: GlobalConfig,
   saved: Partial<GlobalConfig>,
 ): GlobalConfig {

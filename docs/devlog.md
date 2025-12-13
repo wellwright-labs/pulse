@@ -96,4 +96,11 @@ moved tests to __tests__
 
 review review review
 
+add tests
+
+fmt
+
+update fmt to exclude md (deno bastardizes md)
+
+add tests
 
