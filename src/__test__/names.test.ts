@@ -3,7 +3,7 @@
  */
 
 import { assertEquals } from "@std/assert";
-import { cleanName, isValidName, normalizeName, sanitizeName } from "./names.ts";
+import { cleanName, isValidName, normalizeName, sanitizeName } from "../lib/names.ts";
 
 // =============================================================================
 // normalizeName tests

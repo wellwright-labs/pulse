@@ -13,7 +13,7 @@ import {
   readJson,
   updateJson,
   writeJson,
-} from "./storage.ts";
+} from "../lib/storage.ts";
 import { join } from "@std/path";
 
 // Helper to create a temp directory for tests

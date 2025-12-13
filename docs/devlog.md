@@ -90,3 +90,8 @@ remove version const from main, use manifest
 
 rewrite commands to include validators & validate inputs
 
+reviewed more code
+
+moved tests to __tests__
+
+
