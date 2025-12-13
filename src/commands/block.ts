@@ -116,7 +116,11 @@ async function blockStart(args: BlockArgs): Promise<void> {
   // Validate condition
   if (!args.condition) {
     error("Condition required.");
-    console.log(`\nAvailable conditions: ${Object.keys(experiment.conditions).join(", ")}`);
+    console.log(
+      `\nAvailable conditions: ${
+        Object.keys(experiment.conditions).join(", ")
+      }`,
+    );
     Deno.exit(1);
   }
 
@@ -127,7 +131,11 @@ async function blockStart(args: BlockArgs): Promise<void> {
 
   if (!experiment.conditions[condition]) {
     error(`Unknown condition: ${condition}`);
-    console.log(`\nAvailable conditions: ${Object.keys(experiment.conditions).join(", ")}`);
+    console.log(
+      `\nAvailable conditions: ${
+        Object.keys(experiment.conditions).join(", ")
+      }`,
+    );
     Deno.exit(1);
   }
 
@@ -175,7 +183,13 @@ async function blockEnd(): Promise<void> {
   }
 
   console.log("");
-  console.log(formatBlockStatus(block.condition, getDayInBlock(block), block.expectedDuration));
+  console.log(
+    formatBlockStatus(
+      block.condition,
+      getDayInBlock(block),
+      block.expectedDuration,
+    ),
+  );
   console.log("");
 
   // Prompt for summary
@@ -211,7 +225,9 @@ async function blockStatus(): Promise<void> {
   if (!block) {
     info("No active block.");
     console.log(`\nStart one with: pulse block start <condition>`);
-    console.log(`Available conditions: ${Object.keys(experiment.conditions).join(", ")}`);
+    console.log(
+      `Available conditions: ${Object.keys(experiment.conditions).join(", ")}`,
+    );
     return;
   }
 
@@ -220,7 +236,9 @@ async function blockStatus(): Promise<void> {
   const overdue = isBlockOverdue(block);
 
   console.log("");
-  console.log(formatBlockStatus(block.condition, dayInBlock, block.expectedDuration));
+  console.log(
+    formatBlockStatus(block.condition, dayInBlock, block.expectedDuration),
+  );
   console.log("");
   console.log(`  Block: ${block.id}`);
   console.log(`  Started: ${formatDate(block.startDate)}`);
@@ -265,7 +283,13 @@ async function blockList(): Promise<void> {
     const endOrNow = block.endDate ?? new Date();
     const days = getDayInBlock(block, endOrNow).toString();
     const status = block.endDate ? "completed" : "active";
-    return [block.id, block.condition, formatDate(block.startDate), days, status];
+    return [
+      block.id,
+      block.condition,
+      formatDate(block.startDate),
+      days,
+      status,
+    ];
   });
 
   printTable(headers, rows);
@@ -295,7 +319,9 @@ async function blockExtend(args: BlockArgs): Promise<void> {
   await writeJson(blockPath, block);
 
   success(`Extended block by ${days} days`);
-  console.log(`  New duration: ${block.expectedDuration} days (was ${oldDuration})`);
+  console.log(
+    `  New duration: ${block.expectedDuration} days (was ${oldDuration})`,
+  );
 }
 
 function printConditionDetails(name: string, condition: Condition): void {

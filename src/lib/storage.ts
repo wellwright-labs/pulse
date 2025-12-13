@@ -48,7 +48,11 @@ export async function readJson<T>(path: string): Promise<T | null> {
     if (error instanceof Deno.errors.NotFound) {
       return null;
     }
-    throw new Error(`Failed to read ${path}: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Failed to read ${path}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
   }
 }
 
@@ -76,7 +80,11 @@ export async function writeJson(path: string, data: unknown): Promise<void> {
     } catch {
       // Ignore cleanup errors
     }
-    throw new Error(`Failed to write ${path}: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Failed to write ${path}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
   }
 }
 
@@ -84,7 +92,10 @@ export async function writeJson(path: string, data: unknown): Promise<void> {
  * Append content to a file, creating it if it doesn't exist
  * Used for dev log (append-only markdown)
  */
-export async function appendToFile(path: string, content: string): Promise<void> {
+export async function appendToFile(
+  path: string,
+  content: string,
+): Promise<void> {
   // Ensure parent directory exists
   const dir = dirname(path);
   await ensureDir(dir);
@@ -101,7 +112,11 @@ export async function appendToFile(path: string, content: string): Promise<void>
       file.close();
     }
   } catch (error) {
-    throw new Error(`Failed to append to ${path}: ${error instanceof Error ? error.message : String(error)}`);
+    throw new Error(
+      `Failed to append to ${path}: ${
+        error instanceof Error ? error.message : String(error)
+      }`,
+    );
   }
 }
 
@@ -114,7 +129,11 @@ export async function ensureDir(path: string): Promise<void> {
   } catch (error) {
     // Ignore if directory already exists
     if (!(error instanceof Deno.errors.AlreadyExists)) {
-      throw new Error(`Failed to create directory ${path}: ${error instanceof Error ? error.message : String(error)}`);
+      throw new Error(
+        `Failed to create directory ${path}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
     }
   }
 }

@@ -4,7 +4,11 @@
  */
 
 import type { Args } from "@std/cli/parse-args";
-import type { Condition, Experiment, ExperimentTemplate } from "../types/mod.ts";
+import type {
+  Condition,
+  Experiment,
+  ExperimentTemplate,
+} from "../types/mod.ts";
 import type { Command, InitArgs } from "../types/commands.ts";
 import { SCHEMA_VERSIONS } from "../types/mod.ts";
 import { getConfig, saveGlobalConfig } from "../lib/config.ts";
@@ -15,7 +19,12 @@ import {
   getExperimentSubdirs,
   getInitialDirs,
 } from "../lib/paths.ts";
-import { appendToFile, ensureDir, fileExists, writeJson } from "../lib/storage.ts";
+import {
+  appendToFile,
+  ensureDir,
+  fileExists,
+  writeJson,
+} from "../lib/storage.ts";
 import {
   promptBoolean,
   promptChoice,
@@ -28,7 +37,9 @@ import { sanitizeName } from "../lib/names.ts";
 
 // Bundled templates
 import blankTemplate from "../templates/blank.json" with { type: "json" };
-import aiCodingTemplate from "../templates/ai-coding.json" with { type: "json" };
+import aiCodingTemplate from "../templates/ai-coding.json" with {
+  type: "json",
+};
 
 const TEMPLATES: Record<string, ExperimentTemplate> = {
   blank: blankTemplate as ExperimentTemplate,
@@ -55,7 +66,9 @@ Arguments:
   name              Experiment name (prompted if not provided)
 
 Options:
-  --template, -t    Template to use: ${TEMPLATE_NAMES.join(", ")} (default: prompted)
+  --template, -t    Template to use: ${
+    TEMPLATE_NAMES.join(", ")
+  } (default: prompted)
   --help, -h        Show this help
 
 Examples:
@@ -137,7 +150,9 @@ async function getExperimentName(providedName?: string): Promise<string> {
   return result.name;
 }
 
-async function getTemplate(providedTemplate?: string): Promise<ExperimentTemplate> {
+async function getTemplate(
+  providedTemplate?: string,
+): Promise<ExperimentTemplate> {
   let templateName = providedTemplate;
 
   if (templateName && !TEMPLATES[templateName]) {
@@ -212,7 +227,9 @@ async function customizeConditions(
 
     if (!addMore) break;
 
-    const condName = promptTextRequired("Condition name (e.g., 'no-ai', 'with-music')");
+    const condName = promptTextRequired(
+      "Condition name (e.g., 'no-ai', 'with-music')",
+    );
     const result = sanitizeName(condName);
     const description = promptText("Description", "");
 
@@ -245,7 +262,9 @@ async function createExperimentFiles(
 
   // Initialize dev log
   const devLogPath = getDevLogPath(name);
-  const header = `# Dev Log: ${name}\n\nStarted: ${new Date().toLocaleDateString()}\n\n---\n\n`;
+  const header = `# Dev Log: ${name}\n\nStarted: ${
+    new Date().toLocaleDateString()
+  }\n\n---\n\n`;
   await appendToFile(devLogPath, header);
 }
 
@@ -258,7 +277,9 @@ function printSuccess(
   success(`Created experiment: ${name}`);
   console.log("");
   console.log(`  Hypotheses: ${hypotheses.length}`);
-  console.log(`  Conditions: ${Object.keys(conditions).join(", ") || "(none)"}`);
+  console.log(
+    `  Conditions: ${Object.keys(conditions).join(", ") || "(none)"}`,
+  );
   console.log(`  Data: ${getDataDir()}/experiments/${name}/`);
   console.log("");
 

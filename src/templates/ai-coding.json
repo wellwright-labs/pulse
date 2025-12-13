@@ -12,8 +12,18 @@
   "conditions": {
     "no-ai": {
       "description": "No AI assistance",
-      "allowed": ["Documentation", "Stack Overflow", "Search engines", "Man pages"],
-      "forbidden": ["GitHub Copilot", "ChatGPT", "Claude", "Any AI coding assistant"]
+      "allowed": [
+        "Documentation",
+        "Stack Overflow",
+        "Search engines",
+        "Man pages"
+      ],
+      "forbidden": [
+        "GitHub Copilot",
+        "ChatGPT",
+        "Claude",
+        "Any AI coding assistant"
+      ]
     },
     "moderate": {
       "description": "Limited AI assistance",
@@ -38,12 +48,49 @@
   },
   "prompts": {
     "checkin": [
-      {"id": "energy", "question": "Energy", "type": "rating", "min": 1, "max": 5, "required": false, "default": 3},
-      {"id": "focus", "question": "Focus", "type": "rating", "min": 1, "max": 5, "required": false, "default": 3},
-      {"id": "stuck", "question": "Stuck right now?", "type": "boolean", "required": false, "default": false},
-      {"id": "stuckMinutes", "question": "How long stuck (minutes)?", "type": "number", "required": false},
-      {"id": "oneWord", "question": "One word to describe right now", "type": "text", "required": false},
-      {"id": "reachingForAI", "question": "Caught yourself reaching for AI?", "type": "boolean", "required": false}
+      {
+        "id": "energy",
+        "question": "Energy",
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "required": false,
+        "default": 3
+      },
+      {
+        "id": "focus",
+        "question": "Focus",
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "required": false,
+        "default": 3
+      },
+      {
+        "id": "stuck",
+        "question": "Stuck right now?",
+        "type": "boolean",
+        "required": false,
+        "default": false
+      },
+      {
+        "id": "stuckMinutes",
+        "question": "How long stuck (minutes)?",
+        "type": "number",
+        "required": false
+      },
+      {
+        "id": "oneWord",
+        "question": "One word to describe right now",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "reachingForAI",
+        "question": "Caught yourself reaching for AI?",
+        "type": "boolean",
+        "required": false
+      }
     ]
   }
 }

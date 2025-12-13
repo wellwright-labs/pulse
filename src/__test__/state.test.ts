@@ -4,7 +4,11 @@
  */
 
 import { assertEquals } from "@std/assert";
-import { getDayInBlock, getDaysRemaining, isBlockOverdue } from "../lib/state.ts";
+import {
+  getDayInBlock,
+  getDaysRemaining,
+  isBlockOverdue,
+} from "../lib/state.ts";
 import type { Block } from "../types/mod.ts";
 
 // Minimal block factory for testing

@@ -120,7 +120,9 @@ function getISOWeekAndYear(date: Date): { year: number; week: number } {
   d.setDate(d.getDate() + 4 - (d.getDay() || 7));
   const year = d.getFullYear();
   const yearStart = new Date(year, 0, 1);
-  const week = Math.ceil(((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7);
+  const week = Math.ceil(
+    ((d.getTime() - yearStart.getTime()) / 86400000 + 1) / 7,
+  );
   return { year, week };
 }
 
@@ -133,7 +135,10 @@ export function printTable(
 ): void {
   // Calculate column widths
   const widths = headers.map((h, i) => {
-    const maxContent = Math.max(h.length, ...rows.map((r) => (r[i] || "").length));
+    const maxContent = Math.max(
+      h.length,
+      ...rows.map((r) => (r[i] || "").length),
+    );
     return maxContent;
   });
 
@@ -149,7 +154,9 @@ export function printTable(
 
   // Print rows
   for (const row of rows) {
-    const rowLine = row.map((cell, i) => (cell || "").padEnd(widths[i])).join("  ");
+    const rowLine = row.map((cell, i) => (cell || "").padEnd(widths[i])).join(
+      "  ",
+    );
     console.log(rowLine);
   }
 }

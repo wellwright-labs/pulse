@@ -8,9 +8,19 @@ import type { DailyLog, TaskType } from "../types/mod.ts";
 import type { Command, DailyArgs } from "../types/commands.ts";
 import { getDailyPath } from "../lib/paths.ts";
 import { fileExists, writeJson } from "../lib/storage.ts";
-import { getDayInBlock, requireBlock, requireExperiment } from "../lib/state.ts";
+import {
+  getDayInBlock,
+  requireBlock,
+  requireExperiment,
+} from "../lib/state.ts";
 import { promptRating, promptText } from "../lib/prompts.ts";
-import { formatBlockStatus, formatDateId, info, success, warn } from "../lib/format.ts";
+import {
+  formatBlockStatus,
+  formatDateId,
+  info,
+  success,
+  warn,
+} from "../lib/format.ts";
 
 function validate(args: Args): DailyArgs {
   return {
@@ -55,7 +65,9 @@ async function run(args: DailyArgs): Promise<void> {
 
   // Show block status
   console.log("");
-  console.log(formatBlockStatus(block.condition, dayInBlock, block.expectedDuration));
+  console.log(
+    formatBlockStatus(block.condition, dayInBlock, block.expectedDuration),
+  );
   console.log(`[${today}]`);
   console.log("");
 
@@ -66,13 +78,20 @@ async function run(args: DailyArgs): Promise<void> {
   console.log("");
   console.log("Ratings (1-5, Enter to skip):");
   const confidence = promptRating("  Confidence in today's code", 1, 5, 3);
-  const understanding = promptRating("  Understanding of today's code", 1, 5, 3);
+  const understanding = promptRating(
+    "  Understanding of today's code",
+    1,
+    5,
+    3,
+  );
   const fulfillment = promptRating("  Fulfillment", 1, 5, 3);
   const enjoyment = promptRating("  Enjoyment", 1, 5, 3);
   const cognitiveLoad = promptRating("  Cognitive load", 1, 5, 3);
 
   console.log("");
-  const taskTypesInput = promptText("Task types (r=routine, i=integrative, c=creative)");
+  const taskTypesInput = promptText(
+    "Task types (r=routine, i=integrative, c=creative)",
+  );
   const taskTypes = parseTaskTypes(taskTypesInput);
 
   const notes = promptText("Notes (optional)");

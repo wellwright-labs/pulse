@@ -358,7 +358,10 @@ Deno.test("readJson - handles nested Date objects", async () => {
     assertEquals(result?.block.endDate instanceof Date, true);
     assertEquals(result?.timestamps[0] instanceof Date, true);
     assertEquals(result?.timestamps[1] instanceof Date, true);
-    assertEquals(result?.block.startDate.toISOString(), "2025-01-01T00:00:00.000Z");
+    assertEquals(
+      result?.block.startDate.toISOString(),
+      "2025-01-01T00:00:00.000Z",
+    );
   } finally {
     await cleanupTempDir(tempDir);
   }
@@ -368,7 +371,10 @@ Deno.test("readJson - does not convert non-ISO date strings", async () => {
   const tempDir = await createTempDir();
   try {
     const path = join(tempDir, "strings.json");
-    await Deno.writeTextFile(path, '{"date": "2025-01-15", "name": "not-a-date"}');
+    await Deno.writeTextFile(
+      path,
+      '{"date": "2025-01-15", "name": "not-a-date"}',
+    );
 
     const result = await readJson<{ date: string; name: string }>(path);
     assertEquals(typeof result?.date, "string");
@@ -395,8 +401,14 @@ Deno.test("round-trip preserves Date values", async () => {
     const loaded = await readJson<typeof original>(path);
 
     assertEquals(loaded?.createdAt.getTime(), original.createdAt.getTime());
-    assertEquals(loaded?.items[0].timestamp.getTime(), original.items[0].timestamp.getTime());
-    assertEquals(loaded?.items[1].timestamp.getTime(), original.items[1].timestamp.getTime());
+    assertEquals(
+      loaded?.items[0].timestamp.getTime(),
+      original.items[0].timestamp.getTime(),
+    );
+    assertEquals(
+      loaded?.items[1].timestamp.getTime(),
+      original.items[1].timestamp.getTime(),
+    );
   } finally {
     await cleanupTempDir(tempDir);
   }

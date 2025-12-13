@@ -60,7 +60,9 @@ async function main(): Promise<void> {
 
   // Parse args with command-specific options
   const booleanFlags = command.parseOptions.boolean || [];
-  const booleanArray = Array.isArray(booleanFlags) ? booleanFlags : [booleanFlags];
+  const booleanArray = Array.isArray(booleanFlags)
+    ? booleanFlags
+    : [booleanFlags];
 
   const args = parseArgs(Deno.args, {
     ...command.parseOptions,

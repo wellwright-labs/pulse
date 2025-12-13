@@ -8,9 +8,23 @@ import type { Checkin, DailyCheckins } from "../types/mod.ts";
 import type { CheckinArgs, Command } from "../types/commands.ts";
 import { getCheckinsPath } from "../lib/paths.ts";
 import { readJson, writeJson } from "../lib/storage.ts";
-import { getDayInBlock, requireBlock, requireExperiment } from "../lib/state.ts";
-import { promptBoolean, promptNumber, promptRating, promptText } from "../lib/prompts.ts";
-import { formatBlockStatus, formatDateId, formatTime, success } from "../lib/format.ts";
+import {
+  getDayInBlock,
+  requireBlock,
+  requireExperiment,
+} from "../lib/state.ts";
+import {
+  promptBoolean,
+  promptNumber,
+  promptRating,
+  promptText,
+} from "../lib/prompts.ts";
+import {
+  formatBlockStatus,
+  formatDateId,
+  formatTime,
+  success,
+} from "../lib/format.ts";
 
 function validate(args: Args): CheckinArgs {
   return {
@@ -50,7 +64,9 @@ async function run(args: CheckinArgs): Promise<void> {
 
   // Show block status
   console.log("");
-  console.log(formatBlockStatus(block.condition, dayInBlock, block.expectedDuration));
+  console.log(
+    formatBlockStatus(block.condition, dayInBlock, block.expectedDuration),
+  );
   console.log("");
 
   // Collect check-in data

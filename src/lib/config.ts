@@ -63,24 +63,32 @@ export async function getConfig(): Promise<GlobalConfig> {
  * Deep merge two config objects
  * The second object's values override the first
  */
-function mergeConfig(defaults: GlobalConfig, saved: Partial<GlobalConfig>): GlobalConfig {
+function mergeConfig(
+  defaults: GlobalConfig,
+  saved: Partial<GlobalConfig>,
+): GlobalConfig {
   return {
     version: saved.version ?? defaults.version,
     activeExperiment: saved.activeExperiment ?? defaults.activeExperiment,
     dataDir: saved.dataDir ?? defaults.dataDir,
 
     defaults: {
-      blockDuration: saved.defaults?.blockDuration ?? defaults.defaults.blockDuration,
-      checkinFrequency: saved.defaults?.checkinFrequency ?? defaults.defaults.checkinFrequency,
-      checkinPrompts: saved.defaults?.checkinPrompts ?? defaults.defaults.checkinPrompts,
+      blockDuration: saved.defaults?.blockDuration ??
+        defaults.defaults.blockDuration,
+      checkinFrequency: saved.defaults?.checkinFrequency ??
+        defaults.defaults.checkinFrequency,
+      checkinPrompts: saved.defaults?.checkinPrompts ??
+        defaults.defaults.checkinPrompts,
     },
 
     repositories: saved.repositories ?? defaults.repositories,
 
     git: {
       autoCommit: saved.git?.autoCommit ?? defaults.git.autoCommit,
-      commitOnBlockEnd: saved.git?.commitOnBlockEnd ?? defaults.git.commitOnBlockEnd,
-      commitOnDailyLog: saved.git?.commitOnDailyLog ?? defaults.git.commitOnDailyLog,
+      commitOnBlockEnd: saved.git?.commitOnBlockEnd ??
+        defaults.git.commitOnBlockEnd,
+      commitOnDailyLog: saved.git?.commitOnDailyLog ??
+        defaults.git.commitOnDailyLog,
     },
   };
 }

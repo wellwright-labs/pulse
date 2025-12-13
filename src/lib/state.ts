@@ -31,7 +31,9 @@ export class NoBlockError extends Error {
     const conditionList = conditions.length > 0
       ? `\n\nAvailable conditions: ${conditions.join(", ")}`
       : "";
-    super(`No active block. Start one with: pulse block start <condition>${conditionList}`);
+    super(
+      `No active block. Start one with: pulse block start <condition>${conditionList}`,
+    );
     this.name = "NoBlockError";
   }
 }
@@ -123,14 +125,18 @@ export async function loadBlock(blockId: string): Promise<Block | null> {
 /**
  * List all blocks for an experiment
  */
-export async function listBlocksForExperiment(experimentName: string): Promise<Block[]> {
+export async function listBlocksForExperiment(
+  experimentName: string,
+): Promise<Block[]> {
   const files = await listFiles(getBlocksDir(experimentName));
   const blocks: Block[] = [];
 
   for (const file of files) {
     if (file.endsWith(".json")) {
       const blockId = file.replace(".json", "");
-      const block = await readJson<Block>(getBlockPath(experimentName, blockId));
+      const block = await readJson<Block>(
+        getBlockPath(experimentName, blockId),
+      );
       if (block) {
         blocks.push(block);
       }
@@ -184,7 +190,10 @@ export function isBlockOverdue(block: Block, date: Date = new Date()): boolean {
 /**
  * Get days remaining in a block (can be negative if overdue)
  */
-export function getDaysRemaining(block: Block, date: Date = new Date()): number {
+export function getDaysRemaining(
+  block: Block,
+  date: Date = new Date(),
+): number {
   const dayInBlock = getDayInBlock(block, date);
   return block.expectedDuration - dayInBlock + 1;
 }

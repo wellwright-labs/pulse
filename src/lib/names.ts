@@ -45,7 +45,7 @@ export function processName(input: string): {
  */
 export function cleanName(name: string): string {
   return name
-    .replace(/-+/g, "-")  // collapse multiple dashes
+    .replace(/-+/g, "-") // collapse multiple dashes
     .replace(/^-|-$/g, ""); // remove leading/trailing dashes
 }
 

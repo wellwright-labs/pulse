@@ -18,7 +18,9 @@ export function getDataDir(): string {
 
   const home = Deno.env.get("HOME");
   if (!home) {
-    throw new Error("Cannot determine home directory: HOME environment variable not set");
+    throw new Error(
+      "Cannot determine home directory: HOME environment variable not set",
+    );
   }
 
   return join(home, ".config", "pulse");
@@ -132,7 +134,10 @@ export function getMetricsDir(experimentName: string): string {
 /**
  * Get path to metrics file for a specific block
  */
-export function getMetricsPath(experimentName: string, blockId: string): string {
+export function getMetricsPath(
+  experimentName: string,
+  blockId: string,
+): string {
   return join(getMetricsDir(experimentName), `${blockId}.json`);
 }
 
