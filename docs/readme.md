@@ -8,8 +8,22 @@ While `pulse` ships with a default "AI-assisted coding" experiment template (and
 
 ## roadmap
 
-`pulse` is still in pre-alpha. 
+`pulse` is still in pre-alpha.
 
-- [ ] Scaffold foundation (confirm tech stack, scaffold repo, get basic CLI tooling running)
-- [ ]
+- [x] Milestone 1: Core loop (init, block, checkin, daily, log)
+- [ ] Milestone 2: Git foundation (auto-commit, backup)
+- [ ] Milestone 3: Analysis & reporting (metrics, reports, compare)
+- [ ] Milestone 4: Polish & completeness (weekly, config, edit, export)
+- [ ] Milestone 5: Distribution (JSR, compiled binaries)
 - [ ] Add AI observability (e.g. hook into agents and record prompt inputs, timestamp, tokens, etc)
+
+## future improvements
+
+UX polish identified during milestone 1 validation:
+
+1. **Better prompt defaults** - Show defaults as grayed placeholder text in the input field rather than `[default]` suffix
+2. **Interactive select for choices** - Use arrow-key navigation for multiple choice prompts instead of numbered list
+3. **Richer init output** - After creating experiment, show hypotheses list and condition summaries; mention that data dir is a git repo with auto-commit
+4. **Guided next steps** - After each command, suggest the logical next action (e.g., "Next: pulse block start <condition>")
+5. **Editor integration for log** - Open `pulse log` in $EDITOR when available, fall back to terminal input
+6. **Explain task types** - Add help text or prompt hint explaining routine/integrative/creative task types in daily log
