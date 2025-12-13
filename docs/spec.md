@@ -95,16 +95,6 @@ The entire `~/.config/pulse/` directory is initialized as a git repository. This
 
 The tool auto-commits on significant actions (block start/end, daily log completion) with meaningful commit messages. Users can also manually commit or push.
 
-### In-Repo Mode
-
-Optionally, users can initialize an experiment within a specific repository:
-
-```
-pulse init --in-repo
-```
-
-This creates `.pulse/` in the current repo (added to `.gitignore`) and links that experiment to the repo's git history for metrics. Useful for project-specific experiments.
-
 ---
 
 ## Commands
@@ -129,12 +119,6 @@ Creates a new experiment. Prompts for:
 - Conditions to define
 
 If first run, also initializes `~/.config/pulse/` as a git repo.
-
-```
-pulse init --in-repo [experiment-name]
-```
-
-Creates experiment in `./.devex/` for repo-specific tracking. Adds to `.gitignore`. Links git metrics to current repo.
 
 ```
 pulse config
@@ -597,9 +581,6 @@ interface Experiment {
     daily?: PromptDefinition[];
     weekly?: PromptDefinition[];
   };
-  
-  // Linked repo for in-repo mode
-  linkedRepo?: string;
 }
 
 interface PromptDefinition {
