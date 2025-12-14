@@ -97,7 +97,7 @@ export interface Block {
 }
 
 // =============================================================================
-// Check-in
+// Checkin
 // =============================================================================
 
 export interface Checkin {
@@ -121,7 +121,7 @@ export interface Checkin {
   custom?: Record<string, unknown>;
 }
 
-// Check-ins stored as array per day
+// Checkins stored as array per day
 export interface DailyCheckins {
   date: string; // YYYY-MM-DD (date string, not datetime)
   checkins: Checkin[];

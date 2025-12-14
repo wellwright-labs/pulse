@@ -3,7 +3,7 @@
 
 ## Overview
 
-A command-line tool for developers to run structured self-experiments on their workflow, productivity, and experience. Users define hypotheses, work in time-boxed blocks under different conditions, and collect both subjective (check-ins, reflections) and objective (git metrics) data to evaluate their hypotheses.
+A command-line tool for developers to run structured self-experiments on their workflow, productivity, and experience. Users define hypotheses, work in time-boxed blocks under different conditions, and collect both subjective (checkins, reflections) and objective (git metrics) data to evaluate their hypotheses.
 
 While `pulse` ships with a default "AI-assisted coding" experiment template, it's designed to support any workflow experiment: editor changes, work schedule variations, music/environment, methodology shifts, etc.
 
@@ -17,7 +17,7 @@ A structured investigation with:
 - **Hypotheses**: What you're trying to learn (e.g., "I ship more code with AI assistance")
 - **Conditions**: The different states you'll work under (e.g., "no-ai", "full-ai")
 - **Blocks**: Time periods spent in each condition
-- **Measurements**: What you're tracking (check-ins, daily logs, git metrics)
+- **Measurements**: What you're tracking (checkins, daily logs, git metrics)
 
 An experiment can be ongoing/indefinite or have a target end date.
 
@@ -27,7 +27,7 @@ A time-bounded period (default: 2 weeks) where you work under a specific conditi
 - A **condition** (from experiment's defined conditions)
 - **Tags** for categorization
 - Start/end dates
-- Associated check-ins, logs, and metrics
+- Associated checkins, logs, and metrics
 
 ### Condition
 
@@ -36,7 +36,7 @@ A defined working state with:
 - Description
 - Rules (what's allowed/forbidden, or just descriptive notes)
 
-### Check-in
+### Checkin
 
 A micro-measurement taken periodically during work. Quick (30 seconds), structured prompts capturing current state. Frequency is configurable.
 
@@ -127,7 +127,7 @@ pulse config
 Opens config in `$EDITOR`. Or with subcommands:
 
 ```
-pulse config set checkin.frequency 3        # check-ins per day
+pulse config set checkin.frequency 3        # checkins per day
 pulse config set checkin.prompt true        # whether to show reminder prompts
 pulse config add repos ~/projects/my-app    # add repo for git metrics
 pulse config remove repos ~/projects/old    # remove repo
@@ -223,7 +223,7 @@ Lists all blocks with dates, conditions, and status.
 pulse checkin
 ```
 
-Interactive micro check-in. Questions are configurable per experiment. Default prompts:
+Interactive micro checkin. Questions are configurable per experiment. Default prompts:
 
 ```
 [Block: no-ai | Day 12]
@@ -234,7 +234,7 @@ Stuck? (y/n): _
   → How long (minutes)?: _
 One word to describe right now: _
 
-✓ Check-in logged at 2:34 PM
+✓ Checkin logged at 2:34 PM
 ```
 
 All prompts accept Enter for default/skip. Designed to complete in <30 seconds.
@@ -243,7 +243,7 @@ All prompts accept Enter for default/skip. Designed to complete in <30 seconds.
 pulse checkin --quick
 ```
 
-Logs a neutral check-in (all defaults) instantly. For when you want to record "I was here" without detail.
+Logs a neutral checkin (all defaults) instantly. For when you want to record "I was here" without detail.
 
 ```
 pulse daily
@@ -456,11 +456,11 @@ Experiment: ai-coding
 Current block: no-ai-1 (Day 12 of 14)
 
 Today:
-  ✓ 2 check-ins logged
+  ✓ 2 checkins logged
   ○ Daily log pending
 
 This week:
-  ✓ 8 check-ins (target: 10-15)
+  ✓ 8 checkins (target: 10-15)
   ○ Weekly reflection due in 2 days
 
 Repositories tracked: 2
@@ -482,7 +482,7 @@ Shows what's due/overdue:
 ⚠ Daily log missing for yesterday (Jan 14)
 ⚠ Weekly reflection due today
 ⚠ Block ending in 2 days — consider scheduling wrap-up
-✓ 2 check-ins today (next suggested: ~2:00 PM)
+✓ 2 checkins today (next suggested: ~2:00 PM)
 ```
 
 ```
@@ -521,7 +521,7 @@ Commits current state and pushes to remote (if configured):
 
 ```
 $ pulse backup
-Committing: 3 check-ins, 1 daily log
+Committing: 3 checkins, 1 daily log
 Pushing to origin...
 ✓ Backup complete
 ```
@@ -618,7 +618,7 @@ interface Block {
 }
 ```
 
-### Check-in
+### Checkin
 
 ```typescript
 interface Checkin {
@@ -841,12 +841,12 @@ Exceptions:
 - `pulse log` works without a block (general observations)
 - `pulse report` and `pulse compare` work on historical data
 
-### Check-in Prompting
+### Checkin Prompting
 
 When `checkinPrompts` is enabled:
 - Tool can integrate with system notifications (future)
-- `pulse remind` shows suggested check-in times
-- Each check-in records whether it was prompted or manual
+- `pulse remind` shows suggested checkin times
+- Each checkin records whether it was prompted or manual
 - Completion rate (prompted vs completed) is tracked in reports
 
 Suggested times are spread across the workday based on `checkinFrequency`.
@@ -892,7 +892,7 @@ git -C <repo> log --after="<start>" --before="<end>" --format="%aI" --reverse
 
 ### Speed & Defaults
 
-Check-ins should complete in <30 seconds. All prompts have defaults:
+Checkins should complete in <30 seconds. All prompts have defaults:
 - Ratings: 3 (middle)
 - Booleans: false/no
 - Text: empty (skipped)
@@ -904,7 +904,7 @@ Pressing Enter accepts default. `pulse checkin --quick` skips all prompts.
 - JSON files are pretty-printed for human readability
 - Never overwrite without warning
 - Daily logs: one per day (warn if exists, offer to add notes)
-- Check-ins: append to daily array
+- Checkins: append to daily array
 - Dev log: append-only markdown
 - Violations: append to array
 
@@ -912,14 +912,14 @@ Pressing Enter accepts default. `pulse checkin --quick` skips all prompts.
 
 ## Future Considerations (Not in v1)
 
-- **System notifications**: Native OS reminders for check-ins
-- **IDE integration**: VS Code extension for in-editor check-ins
+- **System notifications**: Native OS reminders for checkins
+- **IDE integration**: VS Code extension for in-editor checkins
 - **Time tracking integration**: Pull from Toggl, RescueTime, WakaTime
 - **GitHub/GitLab API**: Fetch metrics via API instead of local repos
 - **Charts & visualization**: HTML export with embedded charts
 - **Team mode**: Aggregated experiments across multiple people
 - **Import/export between machines**: Merge experiment data
-- **Mobile companion**: Quick check-ins from phone
+- **Mobile companion**: Quick checkins from phone
 
 ---
 
@@ -977,7 +977,7 @@ src/
 
 2. **Multiple active experiments**: Allow or enforce single active? Current spec assumes single active but multiple can exist.
 
-3. **Check-in scheduling**: How sophisticated should prompting be? Simple interval vs. smart scheduling based on git activity?
+3. **Checkin scheduling**: How sophisticated should prompting be? Simple interval vs. smart scheduling based on git activity?
 
 4. **Sync/backup**: Should we build in cloud sync, or rely on users setting up git remotes?
 

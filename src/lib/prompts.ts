@@ -157,10 +157,3 @@ export function promptMultiline(question: string): string[] {
 
   return lines;
 }
-
-/**
- * Display a confirmation prompt before a destructive action
- */
-export function confirmAction(message: string): boolean {
-  return promptBoolean(`${message} Are you sure?`, false);
-}

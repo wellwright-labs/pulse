@@ -1,6 +1,6 @@
 /**
  * pulse checkin command
- * Quick micro check-in during work blocks
+ * Quick micro checkin during work blocks
  */
 
 import type { Args } from "@std/cli/parse-args";
@@ -37,10 +37,10 @@ function showHelp(): void {
   console.log(`
 Usage: pulse checkin [options]
 
-Log a quick check-in for the current block.
+Log a quick checkin for the current block.
 
 Options:
-  --quick, -q    Log neutral check-in instantly (skip prompts)
+  --quick, -q    Log neutral checkin instantly (skip prompts)
   --help, -h     Show this help
 
 Examples:
@@ -69,11 +69,11 @@ async function run(args: CheckinArgs): Promise<void> {
   );
   console.log("");
 
-  // Collect check-in data
+  // Collect checkin data
   let checkin: Checkin;
 
   if (args.quick) {
-    // Quick check-in: all defaults, no prompts
+    // Quick checkin: all defaults, no prompts
     checkin = {
       id: crypto.randomUUID(),
       timestamp: now,
@@ -85,7 +85,7 @@ async function run(args: CheckinArgs): Promise<void> {
       stuck: false,
     };
   } else {
-    // Interactive check-in
+    // Interactive checkin
     const energy = promptRating("Energy", 1, 5, 3);
     const focus = promptRating("Focus", 1, 5, 3);
     const stuck = promptBoolean("Stuck?", false);
@@ -114,7 +114,7 @@ async function run(args: CheckinArgs): Promise<void> {
     };
   }
 
-  // Load existing check-ins for today
+  // Load existing checkins for today
   const checkinsPath = getCheckinsPath(experiment.name, today);
   const existing = await readJson<DailyCheckins>(checkinsPath);
 
@@ -123,24 +123,24 @@ async function run(args: CheckinArgs): Promise<void> {
     checkins: [],
   };
 
-  // Add new check-in
+  // Add new checkin
   dailyCheckins.checkins.push(checkin);
 
   // Save
   await writeJson(checkinsPath, dailyCheckins);
 
   console.log("");
-  success(`Check-in logged at ${formatTime(now)}`);
+  success(`Checkin logged at ${formatTime(now)}`);
 
   if (!args.quick) {
     const count = dailyCheckins.checkins.length;
-    console.log(`  Today: ${count} check-in${count !== 1 ? "s" : ""}`);
+    console.log(`  Today: ${count} checkin${count !== 1 ? "s" : ""}`);
   }
 }
 
 export const checkinCommand: Command<CheckinArgs> = {
   name: "checkin",
-  description: "Log a quick check-in",
+  description: "Log a quick checkin",
   usage: "pulse checkin [--quick]",
   parseOptions: {
     boolean: ["quick", "help"],

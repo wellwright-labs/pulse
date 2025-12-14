@@ -69,14 +69,14 @@ export function getBlockPath(experimentName: string, blockId: string): string {
 }
 
 /**
- * Get path to check-ins directory for an experiment
+ * Get path to checkins directory for an experiment
  */
 export function getCheckinsDir(experimentName: string): string {
   return join(getExperimentDir(experimentName), "checkins");
 }
 
 /**
- * Get path to check-ins file for a specific date
+ * Get path to checkins file for a specific date
  */
 export function getCheckinsPath(experimentName: string, date: string): string {
   return join(getCheckinsDir(experimentName), `${date}.json`);

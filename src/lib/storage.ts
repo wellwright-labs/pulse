@@ -66,8 +66,8 @@ export async function writeJson(path: string, data: unknown): Promise<void> {
   const dir = dirname(path);
   await ensureDir(dir);
 
-  // Write to temp file first
-  const tmpPath = `${path}.tmp.${Date.now()}`;
+  // Write to temp file first (use UUID for uniqueness)
+  const tmpPath = `${path}.tmp.${crypto.randomUUID()}`;
   const content = JSON.stringify(data, dateReplacer, 2);
 
   try {

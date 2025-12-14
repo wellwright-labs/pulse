@@ -23,24 +23,6 @@ export function isValidName(name: string): boolean {
 }
 
 /**
- * Normalize and validate a name, returning result with info
- */
-export function processName(input: string): {
-  original: string;
-  normalized: string;
-  wasChanged: boolean;
-  isValid: boolean;
-} {
-  const normalized = normalizeName(input);
-  return {
-    original: input,
-    normalized,
-    wasChanged: normalized !== input,
-    isValid: isValidName(normalized),
-  };
-}
-
-/**
  * Clean up a normalized name by removing consecutive/trailing dashes
  */
 export function cleanName(name: string): string {

@@ -19,7 +19,7 @@ Usage:
 Commands:
   init [name]       Create a new experiment
   block             Manage work blocks (start, end, status)
-  checkin           Log a quick check-in
+  checkin           Log a quick checkin
   daily             Log end-of-day reflection
   log [message]     Append to dev log
 
@@ -31,7 +31,7 @@ Examples:
   pulse init                    Create a new experiment interactively
   pulse init ai-coding          Create experiment named "ai-coding"
   pulse block start no-ai       Start a block under "no-ai" condition
-  pulse checkin                 Log a check-in for current block
+  pulse checkin                 Log a checkin for current block
   pulse daily                   Log today's reflection
 
 Data stored in: ${getDataDir()}
