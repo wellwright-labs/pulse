@@ -132,6 +132,13 @@ export interface ExportArgs {
 }
 
 /**
+ * Validated args for status command
+ */
+export interface StatusArgs {
+  help: boolean;
+}
+
+/**
  * Command definition
  */
 export interface Command<T> {

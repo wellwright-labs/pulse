@@ -52,6 +52,13 @@ export function dim(message: string): void {
 }
 
 /**
+ * Format text as dim (returns string, doesn't print)
+ */
+export function dimText(message: string): string {
+  return `${colors.dim}${message}${colors.reset}`;
+}
+
+/**
  * Format a block status header
  * Example: [Block: no-ai | Day 12 of 14]
  */

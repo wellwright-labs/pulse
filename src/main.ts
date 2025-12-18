@@ -18,6 +18,7 @@ import { syncCommand } from "./commands/sync.ts";
 import { metricsCommand } from "./commands/metrics.ts";
 import { reportCommand } from "./commands/report.ts";
 import { compareCommand } from "./commands/compare.ts";
+import { statusCommand } from "./commands/status.ts";
 import { showHelp, showVersion } from "./lib/help.ts";
 import { error } from "./lib/format.ts";
 
@@ -37,6 +38,7 @@ const commands = {
   metrics: metricsCommand,
   report: reportCommand,
   compare: compareCommand,
+  status: statusCommand,
 } as const;
 
 type CommandName = keyof typeof commands;

@@ -18,7 +18,8 @@ Usage:
 
 Commands:
   init [name]       Create a new experiment
-  block             Manage work blocks (start, end, status)
+  status            Show dashboard and next actions
+  block             Manage work blocks (start, end, list)
   checkin           Log a quick checkin
   daily             Log end-of-day reflection
   weekly            Log weekly reflection
@@ -37,8 +38,8 @@ Options:
   --version, -v     Show version
 
 Examples:
+  pulse status                  Show progress dashboard
   pulse init                    Create a new experiment interactively
-  pulse init ai-coding          Create experiment named "ai-coding"
   pulse block start no-ai       Start a block under "no-ai" condition
   pulse checkin                 Log a checkin for current block
   pulse daily                   Log today's reflection
