@@ -6,24 +6,61 @@ Define hypotheses, work in time-boxed blocks under different conditions, and col
 
 While `pulse` ships with a default "AI-assisted coding" experiment template (and is ultimately the original purpose), it is designed to support any workflow experiment: editor changes, work schedule variations, music/environment, methodology shifts, etc.
 
+## quick start
+
+```bash
+# Create an experiment
+pulse init
+
+# Start a block under a condition
+pulse block start no-ai
+
+# Throughout the day
+pulse status              # See dashboard and what's due
+pulse checkin             # Quick check-in (3x/day recommended)
+pulse log "Fixed the auth bug"  # Freeform notes
+
+# End of day
+pulse daily
+
+# End of week
+pulse weekly
+
+# End of block
+pulse block end
+pulse report              # See analysis
+```
+
+## commands
+
+| Command | Description |
+|---------|-------------|
+| `pulse status` | Dashboard showing progress and next actions |
+| `pulse init` | Create a new experiment (sets up reminders too) |
+| `pulse block start/end/list` | Manage time-boxed work blocks |
+| `pulse checkin` | Quick check-in (energy, focus, stuck) |
+| `pulse daily` | End-of-day reflection |
+| `pulse weekly` | End-of-week reflection |
+| `pulse log [msg]` | Append to dev log |
+| `pulse config` | Manage settings |
+| `pulse edit <target>` | Open data files in $EDITOR |
+| `pulse metrics` | Compute git metrics for a block |
+| `pulse report` | Generate analysis report |
+| `pulse compare` | Compare metrics between blocks |
+| `pulse export` | Export all data as JSON |
+
 ## roadmap
 
-`pulse` is still in pre-alpha. I'm intentionally keeping scope small, so shouldn't take long to get to alpha. But if you're here early, beware the codebase is still quite unstable/in early development.
-
 - [x] Milestone 1: Core loop (init, block, checkin, daily, log)
-- [ ] Milestone 2: Git foundation (auto-commit, backup)
-- [ ] Milestone 3: Analysis & reporting (metrics, reports, compare)
-- [ ] Milestone 4: Polish & completeness (weekly, config, edit, export)
+- [x] Milestone 2: Git foundation (auto-commit, sync, backup)
+- [x] Milestone 3: Analysis & reporting (metrics, reports, compare)
+- [x] Milestone 4: Polish & completeness (weekly, config, edit, export, status, reminders)
 - [ ] Milestone 5: Distribution (JSR, compiled binaries)
-- [ ] Add AI observability (e.g. hook into agents and record prompt inputs, timestamp, tokens, etc)
 
-## future improvements
+## future ideas
 
-UX polish identified during milestone 1 validation:
-
-1. **Better prompt defaults** - Show defaults as grayed placeholder text in the input field rather than `[default]` suffix
-2. **Interactive select for choices** - Use arrow-key navigation for multiple choice prompts instead of numbered list
-3. **Richer init output** - After creating experiment, show hypotheses list and condition summaries; mention that data dir is a git repo with auto-commit
-4. **Guided next steps** - After each command, suggest the logical next action (e.g., "Next: pulse block start <condition>")
-5. **Editor integration for log** - Open `pulse log` in $EDITOR when available, fall back to terminal input
-6. **Explain task types** - Add help text or prompt hint explaining routine/integrative/creative task types in daily log
+- **AI observability** - Hook into agents and record prompt inputs, timestamps, tokens, etc.
+- **Violation tracking** - Log when you break experiment rules (types exist, needs wiring)
+- **Streaks & insights** - Track consistency, surface patterns automatically
+- **Cross-experiment comparison** - Compare results across different experiments
+- **IDE integration** - VS Code extension for in-editor check-ins
