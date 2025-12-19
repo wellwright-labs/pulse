@@ -220,6 +220,28 @@ async function buildExperimentConfig(
   let hypotheses = [...template.hypotheses];
   let conditions = { ...template.conditions };
 
+  // Show template contents before asking to customize
+  if (template.name !== "blank") {
+    console.log("");
+    console.log(`Template: ${template.name}`);
+    dim(template.description);
+
+    if (template.hypotheses.length > 0) {
+      console.log("");
+      console.log("Default hypotheses:");
+      template.hypotheses.forEach((h, i) => dim(`  ${i + 1}. ${h}`));
+    }
+
+    if (Object.keys(template.conditions).length > 0) {
+      console.log("");
+      console.log("Default conditions:");
+      for (const [name, cond] of Object.entries(template.conditions)) {
+        dim(`  ${name}: ${cond.description}`);
+      }
+    }
+    console.log("");
+  }
+
   const shouldCustomize = template.name === "blank" ||
     await promptBoolean("Customize hypotheses and conditions?", false);
 

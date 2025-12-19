@@ -35,13 +35,21 @@ function showHelp(): void {
   console.log(`
 Usage: devex weekly [options]
 
-Log weekly reflection for the current block.
+Log weekly reflection for the current block. Best done at end of week.
+
+Prompts you for:
+  - What you shipped, patterns noticed, frustrations, delights
+  - How you feel about the codebase
+  - What you're looking forward to, what you'd do differently
+  - Ratings (1-5): productivity, code quality, fulfillment, mental clarity
 
 Options:
   --help, -h    Show this help
 
 Examples:
-  devex weekly
+  devex weekly                    # Log this week's reflection
+  devex edit weekly               # Edit this week's reflection
+  devex edit weekly 2025-W03      # Edit a specific week's reflection
 `);
 }
 

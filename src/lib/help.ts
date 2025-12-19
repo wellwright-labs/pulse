@@ -16,6 +16,13 @@ devex v${VERSION} — Developer self-experiment toolkit
 Usage:
   devex <command> [options]
 
+Getting Started:
+  1. devex init           Create your first experiment
+  2. devex block start    Start working under a condition
+  3. devex checkin        Log quick check-ins (2-3x/day)
+  4. devex daily          End-of-day reflection
+  5. devex report         See your analysis
+
 Commands:
   init [name]       Create a new experiment
   status            Show dashboard and next actions

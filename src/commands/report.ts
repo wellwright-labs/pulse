@@ -9,14 +9,19 @@ import type { GitMetrics } from "../types/mod.ts";
 import { getConfig } from "../lib/config.ts";
 import { getMetricsPath } from "../lib/paths.ts";
 import { readJson } from "../lib/storage.ts";
-import { getCurrentBlock, loadBlock, requireExperiment } from "../lib/state.ts";
+import {
+  getCurrentBlock,
+  getMostRecentBlock,
+  loadBlock,
+  requireExperiment,
+} from "../lib/state.ts";
 import {
   aggregateCheckins,
   aggregateDailyLogs,
   loadCheckinsForBlock,
   loadDailyLogsForBlock,
 } from "../lib/analysis.ts";
-import { dim, error, formatDate } from "../lib/format.ts";
+import { dim, error, formatDate, info } from "../lib/format.ts";
 
 function validate(args: Args): ReportArgs {
   return {
@@ -49,7 +54,7 @@ async function run(args: ReportArgs): Promise<void> {
 
   const experiment = await requireExperiment();
 
-  // Get block
+  // Get block: specified > active > most recent
   let block;
   if (args.block) {
     block = await loadBlock(args.block);
@@ -60,8 +65,13 @@ async function run(args: ReportArgs): Promise<void> {
   } else {
     block = await getCurrentBlock();
     if (!block) {
-      error("No active block. Specify a block with --block <id>");
-      Deno.exit(1);
+      // Fall back to most recent block
+      block = await getMostRecentBlock();
+      if (!block) {
+        error("No blocks found. Start one with: devex block start <condition>");
+        Deno.exit(1);
+      }
+      info(`Using most recent block: ${block.id}`);
     }
   }
 
@@ -84,16 +94,13 @@ async function run(args: ReportArgs): Promise<void> {
   const endDate = block.endDate ?? new Date();
 
   console.log("");
-  console.log("╭" + "─".repeat(60) + "╮");
   console.log(
-    `│  Report: ${block.id} (${formatDate(block.startDate)} - ${
+    `Report: ${block.id} (${formatDate(block.startDate)} - ${
       formatDate(endDate)
-    })`.padEnd(61) + "│",
+    })`,
   );
-  console.log(
-    `│  Condition: ${block.condition}`.padEnd(61) + "│",
-  );
-  console.log("╰" + "─".repeat(60) + "╯");
+  console.log(`Condition: ${block.condition}`);
+  console.log("─".repeat(50));
   console.log("");
 
   // Git Metrics

@@ -60,14 +60,14 @@ Subcommands:
 Options:
   --help, -h                     Show this help
 
-Config Keys:
-  defaults.blockDuration         Default block duration in days
-  defaults.checkinFrequency      Check-in frequency per day
-  defaults.checkinPrompts        Enable check-in prompts (true/false)
-  git.autoCommit                 Auto-commit on actions (true/false)
-  git.commitOnBlockEnd           Commit on block end (true/false)
-  git.commitOnDailyLog           Commit on daily log (true/false)
-  git.commitOnWeeklyReflection   Commit on weekly reflection (true/false)
+Config Keys (with defaults):
+  defaults.blockDuration         Block duration in days (default: 14)
+  defaults.checkinFrequency      Check-ins per day (default: 3)
+  defaults.checkinPrompts        Show check-in reminders (default: true)
+  git.autoCommit                 Auto-commit on actions (default: true)
+  git.commitOnBlockEnd           Commit on block end (default: true)
+  git.commitOnDailyLog           Commit on daily log (default: true)
+  git.commitOnWeeklyReflection   Commit on weekly reflection (default: true)
 
 Examples:
   devex config                   # Open in editor
@@ -219,7 +219,11 @@ async function removeRepoPath(
   );
 
   if (!matchByPath && !matchByAbsolute) {
-    error(`Repository not in config: ${path}`);
+    if (path !== absolutePath) {
+      error(`Repository not in config: ${path} (resolved: ${absolutePath})`);
+    } else {
+      error(`Repository not in config: ${path}`);
+    }
     const repoPaths = config.repositories.map((r) => r.path).join(", ");
     info(`Current repositories: ${repoPaths || "(none)"}`);
     Deno.exit(1);

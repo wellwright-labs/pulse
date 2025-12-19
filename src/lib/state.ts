@@ -96,6 +96,20 @@ export async function getCurrentBlock(): Promise<Block | null> {
 }
 
 /**
+ * Get the most recent block (active or ended)
+ * Returns null if no blocks exist
+ */
+export async function getMostRecentBlock(): Promise<Block | null> {
+  const experiment = await getCurrentExperiment();
+  if (!experiment) {
+    return null;
+  }
+
+  const blocks = await listBlocksForExperiment(experiment.name);
+  return blocks[0] ?? null;
+}
+
+/**
  * Get the current block, throwing if none is active
  */
 export async function requireBlock(): Promise<Block> {

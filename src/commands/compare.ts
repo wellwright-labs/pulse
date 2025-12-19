@@ -98,7 +98,7 @@ async function run(args: CompareArgs): Promise<void> {
   // Display comparison
   console.log("");
   console.log(`Comparison: ${a.block.id} vs ${b.block.id}`);
-  console.log("═".repeat(60));
+  console.log("─".repeat(60));
   console.log("");
 
   // Header

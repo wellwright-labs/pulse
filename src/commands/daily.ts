@@ -37,11 +37,19 @@ Usage: devex daily [options]
 
 Log end-of-day reflection for the current block.
 
+Prompts you for:
+  - What you shipped and struggled with
+  - Ratings (1-5): confidence, understanding, fulfillment, enjoyment, cognitive load
+  - Task types: routine (r), integrative (i), creative (c)
+  - Optional notes
+
 Options:
   --help, -h    Show this help
 
 Examples:
-  devex daily
+  devex daily                     # Log today's reflection
+  devex edit daily                # Edit today's log
+  devex edit daily 2025-01-15     # Edit a specific day's log
 `);
 }
 

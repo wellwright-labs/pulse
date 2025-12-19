@@ -9,7 +9,12 @@ import type { GitMetrics } from "../types/mod.ts";
 import { getConfig } from "../lib/config.ts";
 import { getMetricsPath } from "../lib/paths.ts";
 import { readJson, writeJson } from "../lib/storage.ts";
-import { getCurrentBlock, loadBlock, requireExperiment } from "../lib/state.ts";
+import {
+  getCurrentBlock,
+  getMostRecentBlock,
+  loadBlock,
+  requireExperiment,
+} from "../lib/state.ts";
 import { computeGitMetrics } from "../lib/metrics.ts";
 import { dim, error, formatDate, info, success } from "../lib/format.ts";
 
@@ -48,7 +53,7 @@ async function run(args: MetricsArgs): Promise<void> {
   const experiment = await requireExperiment();
   const config = await getConfig();
 
-  // Get block
+  // Get block: specified > active > most recent
   let block;
   if (args.block) {
     block = await loadBlock(args.block);
@@ -59,8 +64,13 @@ async function run(args: MetricsArgs): Promise<void> {
   } else {
     block = await getCurrentBlock();
     if (!block) {
-      error("No active block. Specify a block with --block <id>");
-      Deno.exit(1);
+      // Fall back to most recent block
+      block = await getMostRecentBlock();
+      if (!block) {
+        error("No blocks found. Start one with: devex block start <condition>");
+        Deno.exit(1);
+      }
+      info(`Using most recent block: ${block.id}`);
     }
   }
 

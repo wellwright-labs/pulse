@@ -117,11 +117,14 @@ async function blockStart(args: BlockArgs): Promise<void> {
   // Validate condition
   if (!args.condition) {
     error("Condition required.");
+    console.log("\nA condition is a working environment you're comparing");
+    console.log("(e.g., 'no-ai' vs 'full-ai', or 'with-music' vs 'quiet').");
     console.log(
       `\nAvailable conditions: ${
         Object.keys(experiment.conditions).join(", ")
       }`,
     );
+    console.log("\nUsage: devex block start <condition>");
     Deno.exit(1);
   }
 

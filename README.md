@@ -171,6 +171,7 @@ After completing blocks, you have several ways to analyze your data:
 | `devex status`               | Dashboard showing progress and next actions     |
 | `devex init`                 | Create a new experiment (sets up reminders too) |
 | `devex block start/end/list` | Manage time-boxed work blocks                   |
+| `devex block extend <days>`  | Extend current block by N days                  |
 | `devex checkin`              | Quick check-in (energy, focus, stuck)           |
 | `devex daily`                | End-of-day reflection                           |
 | `devex weekly`               | End-of-week reflection                          |
@@ -181,6 +182,20 @@ After completing blocks, you have several ways to analyze your data:
 | `devex report`               | Generate analysis report                        |
 | `devex compare`              | Compare metrics between blocks                  |
 | `devex export`               | Export all data as JSON                         |
+
+## configuration defaults
+
+| Setting                        | Default | Description                              |
+| ------------------------------ | ------- | ---------------------------------------- |
+| `defaults.blockDuration`       | 14      | Block duration in days                   |
+| `defaults.checkinFrequency`    | 3       | Target check-ins per day                 |
+| `defaults.checkinPrompts`      | true    | Show system notification reminders       |
+| `git.autoCommit`               | true    | Auto-commit data changes                 |
+| `git.commitOnBlockEnd`         | true    | Commit when ending a block               |
+| `git.commitOnDailyLog`         | true    | Commit when logging daily reflection     |
+| `git.commitOnWeeklyReflection` | true    | Commit when logging weekly reflection    |
+
+Configure with `devex config set <key> <value>` or `devex config` to edit directly.
 
 ## roadmap
 
