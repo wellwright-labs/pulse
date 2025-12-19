@@ -3,7 +3,7 @@
  * Supports both local git repos (via CLI) and GitHub repos (via API)
  */
 
-import type { Block, GitMetrics, RepoMetrics } from "../types/mod.ts";
+import type {
   Block,
   GitMetrics,
   RepoMetrics,
@@ -66,6 +66,34 @@ export function parseRepoIdentifier(repo: string): RepoIdentifier {
   return { type: "local", path: repo };
 }
 
+// =============================================================================
+// Git User Detection
+// =============================================================================
+
+/**
+ * Get the current git user's email from a repository
+ */
+async function getGitUserEmail(repoPath: string): Promise<string | null> {
+  const result = await gitCommand(["config", "user.email"], repoPath);
+  if (result.success && result.stdout) {
+    return result.stdout.trim();
+  }
+  return null;
+}
+
+/**
+ * Get the GitHub username from GITHUB_TOKEN or git config
+ */
+async function getGitHubUsername(): Promise<string | null> {
+  const token = await getGitHubToken();
+  if (!token) return null;
+
+  try {
+    const response = await fetch("https://api.github.com/user", {
+      headers: {
+        Authorization: `token ${token}`,
+        Accept: "application/vnd.github.v3+json",
+        "User-Agent": "devex-cli",
       },
     });
 
