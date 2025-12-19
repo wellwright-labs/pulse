@@ -1,5 +1,7 @@
 # devex
 
+[![JSR](https://jsr.io/badges/@wellwright/devex)](https://jsr.io/@wellwright/devex)
+
 A CLI for developers to run structured self-experiments on their workflow, productivity, and experience.
 
 Define hypotheses, work in time-boxed blocks under different conditions, and collect both subjective (checkins, reflections) and objective (git metrics) data to evaluate your hypotheses.
@@ -7,6 +9,8 @@ Define hypotheses, work in time-boxed blocks under different conditions, and col
 While `devex` ships with a default "AI-assisted coding" experiment template (and is ultimately the original purpose), it is designed to support any workflow experiment: editor changes, work schedule variations, music/environment, methodology shifts, etc.
 
 > devex is in alpha / dogfooding stage (as I run my own experiments!). I expect bugs. Contributions / ideas are welcome!
+
+**[Why I built this →](https://wlls.dev/blog/devex)**
 
 ![devex demo](docs/demo.gif)
 
