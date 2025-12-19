@@ -7,8 +7,8 @@
  *
  * @example Install and run
  * ```bash
- * # Install from JSR
- * deno install -A jsr:@wellwright/devex
+ * # Install globally from JSR
+ * deno install -g -A -n devex jsr:@wellwright/devex
  *
  * # Create an experiment
  * devex init

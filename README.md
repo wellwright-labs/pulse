@@ -9,7 +9,8 @@ While `devex` ships with a default "AI-assisted coding" experiment template (and
 ## install
 
 ```bash
-deno install -A jsr:@wellwright/devex
+# Global install via Deno
+deno install -g -A -n devex jsr:@wellwright/devex
 ```
 
 ## quick start
