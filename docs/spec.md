@@ -1,5 +1,8 @@
 # Devex — Specification
+
 ---
+
+> For anyone lurking, this was the original "spec" I used alongside Claude / AI tools to help scaffold the foundation. I've left it here for transparency / in the interest of my own meta-explorations. The actual implementation has drifted a bit from this spec, and it should not be used for basing future changes.
 
 ## Overview
 
@@ -14,6 +17,7 @@ While `devex` ships with a default "AI-assisted coding" experiment template, it'
 ### Experiment
 
 A structured investigation with:
+
 - **Hypotheses**: What you're trying to learn (e.g., "I ship more code with AI assistance")
 - **Conditions**: The different states you'll work under (e.g., "no-ai", "full-ai")
 - **Blocks**: Time periods spent in each condition
@@ -24,6 +28,7 @@ An experiment can be ongoing/indefinite or have a target end date.
 ### Block
 
 A time-bounded period (default: 2 weeks) where you work under a specific condition. Blocks have:
+
 - A **condition** (from experiment's defined conditions)
 - **Tags** for categorization
 - Start/end dates
@@ -32,6 +37,7 @@ A time-bounded period (default: 2 weeks) where you work under a specific conditi
 ### Condition
 
 A defined working state with:
+
 - Name (e.g., "no-ai", "standing-desk", "pomodoro")
 - Description
 - Rules (what's allowed/forbidden, or just descriptive notes)
@@ -88,6 +94,7 @@ All data lives in `~/.config/devex/` by default (or `~/devex/` on systems withou
 ### Git-Based Version Control
 
 The entire `~/.config/devex/` directory is initialized as a git repository. This provides:
+
 - Version history of all data
 - Ability to push to a private remote for backup
 - Branch-based experimentation on the tool itself
@@ -113,6 +120,7 @@ devex init [experiment-name]
 ```
 
 Creates a new experiment. Prompts for:
+
 - Experiment name (default: based on template or "my-experiment")
 - Template to use (default: "blank", option: "ai-coding")
 - Hypotheses (freeform, one per line, optional)
@@ -191,6 +199,7 @@ devex block end
 ```
 
 Ends current block. Prompts for block summary:
+
 - How would you describe this block?
 - What surprised you?
 - What confirmed your expectations?
@@ -432,7 +441,7 @@ Based on data collected:
 H1: "I ship more code with AI"
     → SUPPORTED: +45% commits, +58% lines changed
 
-H2: "I retain less understanding with AI"  
+H2: "I retain less understanding with AI"
     → SUPPORTED: Understanding rating -0.9
 
 H3: "I am more fulfilled with moderate AI use"
@@ -536,18 +545,18 @@ Pushing to origin...
 interface GlobalConfig {
   version: number;
   activeExperiment: string | null;
-  dataDir: string;                    // usually ~/.config/devex
-  
+  dataDir: string; // usually ~/.config/devex
+
   defaults: {
-    blockDuration: number;            // days, default: 14
-    checkinFrequency: number;         // per day, default: 3
-    checkinPrompts: boolean;          // show reminders, default: true
+    blockDuration: number; // days, default: 14
+    checkinFrequency: number; // per day, default: 3
+    checkinPrompts: boolean; // show reminders, default: true
   };
-  
-  repositories: string[];             // paths to repos for git metrics
-  
+
+  repositories: string[]; // paths to repos for git metrics
+
   git: {
-    autoCommit: boolean;              // default: true
+    autoCommit: boolean; // default: true
     commitOnBlockEnd: boolean;
     commitOnDailyLog: boolean;
   };
@@ -561,11 +570,11 @@ interface Experiment {
   version: number;
   name: string;
   description?: string;
-  createdAt: string;                  // ISO datetime
-  template?: string;                  // template used to create
-  
+  createdAt: string; // ISO datetime
+  template?: string; // template used to create
+
   hypotheses: string[];
-  
+
   conditions: {
     [name: string]: {
       description: string;
@@ -574,7 +583,7 @@ interface Experiment {
       notes?: string;
     };
   };
-  
+
   // Custom questions (if not using defaults)
   prompts?: {
     checkin?: PromptDefinition[];
@@ -586,9 +595,9 @@ interface Experiment {
 interface PromptDefinition {
   id: string;
   question: string;
-  type: 'rating' | 'boolean' | 'text' | 'choice';
-  options?: string[];                 // for choice type
-  min?: number;                       // for rating
+  type: "rating" | "boolean" | "text" | "choice";
+  options?: string[]; // for choice type
+  min?: number; // for rating
   max?: number;
   required: boolean;
   default?: any;
@@ -599,22 +608,22 @@ interface PromptDefinition {
 
 ```typescript
 interface Block {
-  id: string;                         // e.g., "no-ai-1"
+  id: string; // e.g., "no-ai-1"
   condition: string;
   tags: string[];
-  
-  startDate: string;                  // ISO datetime
-  endDate?: string;                   // ISO datetime, null if active
-  expectedDuration: number;           // days
-  
+
+  startDate: string; // ISO datetime
+  endDate?: string; // ISO datetime, null if active
+  expectedDuration: number; // days
+
   summary?: {
     description: string;
     surprises: string;
     confirmedExpectations: string;
     completedAt: string;
   };
-  
-  metrics?: GitMetrics;               // cached when block ends
+
+  metrics?: GitMetrics; // cached when block ends
 }
 ```
 
@@ -622,22 +631,22 @@ interface Block {
 
 ```typescript
 interface Checkin {
-  id: string;                         // uuid
-  timestamp: string;                  // ISO datetime
+  id: string; // uuid
+  timestamp: string; // ISO datetime
   block: string;
   dayInBlock: number;
-  
+
   // Core fields (always present)
-  prompted: boolean;                  // was this from a prompt or manual?
-  promptedAt?: string;                // when prompt was shown
-  
+  prompted: boolean; // was this from a prompt or manual?
+  promptedAt?: string; // when prompt was shown
+
   // Default fields (can be extended by experiment)
-  energy?: number;                    // 1-5
-  focus?: number;                     // 1-5
+  energy?: number; // 1-5
+  focus?: number; // 1-5
   stuck?: boolean;
   stuckMinutes?: number;
   oneWord?: string;
-  
+
   // Extension fields from custom prompts
   custom?: Record<string, any>;
 }
@@ -649,14 +658,14 @@ Stored as array in `checkins/YYYY-MM-DD.json`.
 
 ```typescript
 interface DailyLog {
-  date: string;                       // YYYY-MM-DD
+  date: string; // YYYY-MM-DD
   block: string;
-  completedAt: string;                // ISO datetime
-  
+  completedAt: string; // ISO datetime
+
   // Default fields
   shipped?: string;
   struggled?: string;
-  
+
   ratings?: {
     confidence?: number;
     understanding?: number;
@@ -664,10 +673,10 @@ interface DailyLog {
     enjoyment?: number;
     cognitiveLoad?: number;
   };
-  
-  taskTypes?: ('routine' | 'integrative' | 'creative')[];
+
+  taskTypes?: ("routine" | "integrative" | "creative")[];
   notes?: string;
-  
+
   // Extension fields
   custom?: Record<string, any>;
 }
@@ -677,10 +686,10 @@ interface DailyLog {
 
 ```typescript
 interface WeeklyReflection {
-  week: string;                       // YYYY-Www
+  week: string; // YYYY-Www
   block: string;
   completedAt: string;
-  
+
   // Default fields
   shipped?: string;
   patterns?: string;
@@ -689,14 +698,14 @@ interface WeeklyReflection {
   codebaseFeel?: string;
   lookingForward?: string;
   wouldChange?: string;
-  
+
   ratings?: {
     productivity?: number;
     quality?: number;
     fulfillment?: number;
     mentalClarity?: number;
   };
-  
+
   // Extension fields
   custom?: Record<string, any>;
 }
@@ -721,16 +730,16 @@ Stored in `violations.json` as array.
 interface GitMetrics {
   block: string;
   computedAt: string;
-  
+
   dateRange: {
     start: string;
     end: string;
   };
-  
+
   repositories: {
     [path: string]: RepoMetrics;
   };
-  
+
   totals: RepoMetrics;
 }
 
@@ -742,7 +751,7 @@ interface RepoMetrics {
   testFilesChanged: number;
   docFilesChanged: number;
   avgCommitsPerDay: number;
-  firstCommitTimes: string[];         // for procrastination analysis
+  firstCommitTimes: string[]; // for procrastination analysis
 }
 ```
 
@@ -771,7 +780,7 @@ Ships with the tool as a ready-to-use experiment:
 {
   "name": "ai-coding",
   "description": "Experiment to evaluate AI-assisted coding impact on productivity, quality, and satisfaction",
-  
+
   "hypotheses": [
     "I procrastinate starting less with AI assistance",
     "I ship more code with AI assistance",
@@ -780,12 +789,22 @@ Ships with the tool as a ready-to-use experiment:
     "I retain less understanding of the codebase with heavy AI use",
     "Moderate AI use is more fulfilling than no AI or full AI"
   ],
-  
+
   "conditions": {
     "no-ai": {
       "description": "No AI assistance",
-      "allowed": ["Documentation", "Stack Overflow", "Search engines", "Man pages"],
-      "forbidden": ["GitHub Copilot", "ChatGPT", "Claude", "Any AI coding assistant"]
+      "allowed": [
+        "Documentation",
+        "Stack Overflow",
+        "Search engines",
+        "Man pages"
+      ],
+      "forbidden": [
+        "GitHub Copilot",
+        "ChatGPT",
+        "Claude",
+        "Any AI coding assistant"
+      ]
     },
     "moderate": {
       "description": "Limited AI assistance",
@@ -808,15 +827,52 @@ Ships with the tool as a ready-to-use experiment:
       "notes": "Use AI however feels natural. Pair programming, code generation, agents, etc."
     }
   },
-  
+
   "prompts": {
     "checkin": [
-      {"id": "energy", "question": "Energy", "type": "rating", "min": 1, "max": 5, "required": false, "default": 3},
-      {"id": "focus", "question": "Focus", "type": "rating", "min": 1, "max": 5, "required": false, "default": 3},
-      {"id": "stuck", "question": "Stuck right now?", "type": "boolean", "required": false, "default": false},
-      {"id": "stuckMinutes", "question": "How long stuck (minutes)?", "type": "number", "required": false},
-      {"id": "oneWord", "question": "One word to describe right now", "type": "text", "required": false},
-      {"id": "reachingForAI", "question": "Caught yourself reaching for AI?", "type": "boolean", "required": false}
+      {
+        "id": "energy",
+        "question": "Energy",
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "required": false,
+        "default": 3
+      },
+      {
+        "id": "focus",
+        "question": "Focus",
+        "type": "rating",
+        "min": 1,
+        "max": 5,
+        "required": false,
+        "default": 3
+      },
+      {
+        "id": "stuck",
+        "question": "Stuck right now?",
+        "type": "boolean",
+        "required": false,
+        "default": false
+      },
+      {
+        "id": "stuckMinutes",
+        "question": "How long stuck (minutes)?",
+        "type": "number",
+        "required": false
+      },
+      {
+        "id": "oneWord",
+        "question": "One word to describe right now",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "reachingForAI",
+        "question": "Caught yourself reaching for AI?",
+        "type": "boolean",
+        "required": false
+      }
     ]
   }
 }
@@ -838,12 +894,14 @@ Available conditions: no-ai, moderate, full-ai
 ```
 
 Exceptions:
+
 - `devex log` works without a block (general observations)
 - `devex report` and `devex compare` work on historical data
 
 ### Checkin Prompting
 
 When `checkinPrompts` is enabled:
+
 - Tool can integrate with system notifications (future)
 - `devex remind` shows suggested checkin times
 - Each checkin records whether it was prompted or manual
@@ -854,6 +912,7 @@ Suggested times are spread across the workday based on `checkinFrequency`.
 ### Partial Data
 
 All rating/text fields are optional. Users can skip any prompt by pressing Enter. Reports handle missing data gracefully:
+
 - Averages computed only from present values
 - "N/A" shown when insufficient data
 - Completion percentages shown in reports
@@ -869,12 +928,14 @@ All rating/text fields are optional. Users can skip any prompt by pressing Enter
 ### Git Integration
 
 **Data directory git**:
+
 - Initialized automatically on first `devex init`
 - Auto-commits on configurable events (block end, daily log)
 - `devex git` passes through to git in data dir
 - `devex backup` commits and pushes
 
 **Repository metrics**:
+
 - Repos added via `devex config add repos <path>`
 - Metrics computed on `devex metrics` or block end
 - Git commands used:
@@ -893,6 +954,7 @@ git -C <repo> log --after="<start>" --before="<end>" --format="%aI" --reverse
 ### Speed & Defaults
 
 Checkins should complete in <30 seconds. All prompts have defaults:
+
 - Ratings: 3 (middle)
 - Booleans: false/no
 - Text: empty (skipped)

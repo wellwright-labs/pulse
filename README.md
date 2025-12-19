@@ -6,7 +6,7 @@ Define hypotheses, work in time-boxed blocks under different conditions, and col
 
 While `devex` ships with a default "AI-assisted coding" experiment template (and is ultimately the original purpose), it is designed to support any workflow experiment: editor changes, work schedule variations, music/environment, methodology shifts, etc.
 
-> devex is in alpha / dogfooding stage -- I expect bugs and contributions / ideas are welcome
+> devex is in alpha / dogfooding stage (as I run my own experiments!). I expect bugs. Contributions / ideas are welcome!
 
 ## install
 
@@ -27,6 +27,8 @@ curl -fsSL https://raw.githubusercontent.com/wellwright-labs/devex/main/install.
 git clone https://github.com/wellwright-labs/devex.git
 cd devex && deno task compile
 ```
+
+> Note: Windows support is currently untested and works based on cross-compilation via Deno. Some features may not work as expected (e.g. reminders)
 
 ## quick start
 
@@ -99,6 +101,8 @@ Each **block** is a focused period (e.g. 1-5 days) working under a single condit
 
 After completing blocks under different conditions, use `devex report` and `devex compare` to analyze results.
 
+> Automated analysis and custom dashboards are planned future features, but for now all experiment takeaways and data analysis are left up to the user.
+
 ### data storage
 
 All data lives in `~/.config/devex/` as a git repository:
@@ -135,6 +139,7 @@ devex config add repos owner/repo
 ```
 
 When you run `devex metrics`, devex analyzes commits made to these repos during the block's timeframe and computes:
+
 - Commit count and frequency
 - Lines added/removed
 - Files changed (including test and doc files specifically)
@@ -143,14 +148,15 @@ When you run `devex metrics`, devex analyzes commits made to these repos during 
 
 After completing blocks, you have several ways to analyze your data:
 
-| Command | Purpose |
-|---------|---------|
-| `devex metrics` | Compute raw git stats for one block |
-| `devex report` | Full analysis of one block (git + check-ins + daily ratings) |
-| `devex compare block1 block2` | Side-by-side comparison of two blocks with deltas |
-| `devex export` | Export all experiment data as JSON for external analysis |
+| Command                       | Purpose                                                      |
+| ----------------------------- | ------------------------------------------------------------ |
+| `devex metrics`               | Compute raw git stats for one block                          |
+| `devex report`                | Full analysis of one block (git + check-ins + daily ratings) |
+| `devex compare block1 block2` | Side-by-side comparison of two blocks with deltas            |
+| `devex export`                | Export all experiment data as JSON for external analysis     |
 
 **`report`** combines:
+
 - Git metrics (commits, lines, test/doc files)
 - Check-in aggregates (avg energy/focus, stuck %, top words)
 - Daily ratings (confidence, understanding, fulfillment, enjoyment, cognitive load)
@@ -188,6 +194,7 @@ After completing blocks, you have several ways to analyze your data:
   - [x] Support configurable branch per repo
 
 ## known limitations
+
 - **Duplicate repo detection**: If you add the same repo both as a local path and GitHub URL, commits will be double-counted.
 - **Multiple experiments**: You can have multiple experiments, but there's no `list` or `switch` command yet. To switch, edit `activeExperiment` in `~/.config/devex/config.json`.
 
@@ -204,3 +211,4 @@ After completing blocks, you have several ways to analyze your data:
 - **Streaks & insights** - Track consistency, surface patterns automatically
 - **Cross-experiment comparison** - Compare results across different experiments
 - **IDE integration** - Zed/neovim/VS Code/helix/etc extensions for in-editor check-ins
+- **Live dashboard/GUI** - A GUI (likely simple Vite-powered) dashboard for users that prefer that over a CLI / to enable more complex visualiations
