@@ -243,7 +243,7 @@ Deno.test("generateBlockId - counts only matching condition", async () => {
 // =============================================================================
 
 Deno.test("getCurrentBlock - returns null when no experiment", async () => {
-  const { dataDir, cleanup } = await createTestEnvironment();
+  const { cleanup } = await createTestEnvironment();
   try {
     // No experiment set up - just empty data dir
     const block = await getCurrentBlock();

@@ -8,7 +8,7 @@ import type { Block, Condition } from "../types/mod.ts";
 import type { BlockArgs, Command } from "../types/commands.ts";
 import { getConfig } from "../lib/config.ts";
 import { getBlockPath } from "../lib/paths.ts";
-import { readJson, writeJson } from "../lib/storage.ts";
+import { writeJson } from "../lib/storage.ts";
 import {
   generateBlockId,
   getCurrentBlock,

@@ -332,7 +332,7 @@ export async function computeGitHubRepoMetrics(
 /**
  * Compute metrics for a single repository (local or GitHub)
  */
-export async function computeRepoMetrics(
+export function computeRepoMetrics(
   repo: string,
   startDate: Date,
   endDate: Date,
@@ -359,7 +359,7 @@ export function aggregateRepoMetrics(
 ): RepoMetrics {
   const allFirstCommitTimes: Date[] = [];
 
-  let totals: RepoMetrics = {
+  const totals: RepoMetrics = {
     commits: 0,
     linesAdded: 0,
     linesRemoved: 0,

@@ -7,7 +7,7 @@ import type { Args } from "@std/cli/parse-args";
 import type { DailyCheckins } from "../types/mod.ts";
 import type { Command, StatusArgs } from "../types/commands.ts";
 import { getCheckinsPath, getDailyPath, getWeeklyPath } from "../lib/paths.ts";
-import { fileExists, listFiles, readJson } from "../lib/storage.ts";
+import { fileExists, readJson } from "../lib/storage.ts";
 import {
   getCurrentBlock,
   getDayInBlock,
@@ -236,10 +236,9 @@ export function calculateNextCheckinTime(
   const hour = now.getHours();
   const minute = now.getMinutes();
 
-  // Work hours: 9am to 5pm (8 hours)
+  // Work hours: 9am to 5pm
   const workStart = 9;
   const workEnd = 17;
-  const workHours = workEnd - workStart;
 
   // If before work hours, first checkin at 9am
   if (hour < workStart) {
@@ -251,8 +250,7 @@ export function calculateNextCheckinTime(
     return null;
   }
 
-  // Calculate ideal spacing
-  const intervalHours = workHours / expectedCheckins;
+  // Calculate remaining checkins
   const checkinsRemaining = expectedCheckins - checkins.length;
 
   if (checkinsRemaining <= 0) {

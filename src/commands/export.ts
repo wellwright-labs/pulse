@@ -14,7 +14,6 @@ import type {
 } from "../types/mod.ts";
 import type { Command, ExportArgs } from "../types/commands.ts";
 import {
-  getBlocksDir,
   getCheckinsDir,
   getDailyDir,
   getDevLogPath,
@@ -23,7 +22,7 @@ import {
 } from "../lib/paths.ts";
 import { fileExists, listFiles, readJson, writeJson } from "../lib/storage.ts";
 import { listBlocksForExperiment, requireExperiment } from "../lib/state.ts";
-import { error, success } from "../lib/format.ts";
+import { success } from "../lib/format.ts";
 
 interface ExportData {
   exportedAt: Date;
