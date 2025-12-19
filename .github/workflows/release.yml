@@ -1,0 +1,48 @@
+name: Release Binaries
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - target: x86_64-apple-darwin
+            os: macos-latest
+            name: devex-macos-x64
+          - target: aarch64-apple-darwin
+            os: macos-latest
+            name: devex-macos-arm64
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: devex-linux-x64
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: devex-linux-arm64
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: devex-windows-x64.exe
+
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Compile
+        run: |
+          deno compile --target ${{ matrix.target }} --allow-read --allow-write --allow-run --allow-env --output ${{ matrix.name }} src/main.ts
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.name }}

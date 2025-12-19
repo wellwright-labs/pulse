@@ -9,8 +9,18 @@ While `devex` ships with a default "AI-assisted coding" experiment template (and
 ## install
 
 ```bash
-# Global install via Deno
+# Via Deno (recommended)
 deno install -g -A -n devex jsr:@wellwright/devex
+
+# Via curl (downloads pre-built binary)
+curl -fsSL https://raw.githubusercontent.com/wellwright/devex/main/install.sh | sh
+
+# Download binary directly
+# https://github.com/wellwright/devex/releases
+
+# Build from source
+git clone https://github.com/wellwright/devex.git
+cd devex && deno task compile
 ```
 
 ## quick start
