@@ -8,6 +8,8 @@ While `devex` ships with a default "AI-assisted coding" experiment template (and
 
 > devex is in alpha / dogfooding stage (as I run my own experiments!). I expect bugs. Contributions / ideas are welcome!
 
+![devex demo](docs/demo.gif)
+
 ## install
 
 ```bash

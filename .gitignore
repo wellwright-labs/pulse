@@ -3,3 +3,6 @@ dist/
 
 # lock file (can be generated from deno.json)
 deno.lock
+
+# annoying mac bs
+.DS_Store
