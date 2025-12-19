@@ -2,9 +2,9 @@
 set -e
 
 # devex installer
-# Usage: curl -fsSL https://raw.githubusercontent.com/wellwright/devex/main/install.sh | sh
+# Usage: curl -fsSL https://raw.githubusercontent.com/wellwright-labs/devex/main/install.sh | sh
 
-REPO="wellwright/devex"
+REPO="wellwright-labs/devex"
 INSTALL_DIR="${INSTALL_DIR:-/usr/local/bin}"
 
 # Detect OS and architecture

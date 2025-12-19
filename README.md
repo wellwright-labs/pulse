@@ -13,13 +13,13 @@ While `devex` ships with a default "AI-assisted coding" experiment template (and
 deno install -g -A -n devex jsr:@wellwright/devex
 
 # Via curl (downloads pre-built binary)
-curl -fsSL https://raw.githubusercontent.com/wellwright/devex/main/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/wellwright-labs/devex/main/install.sh | sh
 
 # Download binary directly
-# https://github.com/wellwright/devex/releases
+# https://github.com/wellwright-labs/devex/releases
 
 # Build from source
-git clone https://github.com/wellwright/devex.git
+git clone https://github.com/wellwright-labs/devex.git
 cd devex && deno task compile
 ```
 
