@@ -82,3 +82,43 @@ Remove in-repo mode entirely. All experiments live in `~/.config/devex/`.
 ### Migration
 
 None needed — feature was never implemented.
+
+---
+
+## 003: No explicit "end experiment" concept
+
+**Date**: 2025-01-19
+**Status**: Accepted
+
+### Context
+
+During Milestone 6 planning, we considered whether experiments should have an explicit end state or lifecycle.
+
+### Decision
+
+Experiments do not have an "end" state. They are simply collections of blocks that can grow indefinitely.
+
+### Rationale
+
+1. **Experiments are ongoing**: A developer might run the same experiment (e.g., "AI-assisted coding") multiple times over months or years, adding blocks as they revisit the question.
+
+2. **Blocks are the unit of completion**: Each block has a clear start and end. The experiment is just the container for related blocks.
+
+3. **Simplicity**: Adding experiment lifecycle states (active, paused, completed, archived) adds complexity without clear benefit. Users can simply stop adding blocks to an experiment they're done with.
+
+4. **Data preservation**: Without an "end" state, there's no risk of accidentally closing an experiment and losing the ability to add more data.
+
+### Consequences
+
+**Positive**:
+- Simpler mental model
+- Experiments remain available for new blocks indefinitely
+- No migration needed if we later add lifecycle states
+
+**Negative**:
+- No way to "archive" old experiments from cluttering the namespace
+- `experiment list` (when implemented) will show all experiments equally
+
+### Future consideration
+
+If users request it, we could add an optional `archived: boolean` field to experiments for filtering in list views, without changing the core model.
