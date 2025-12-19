@@ -46,3 +46,88 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: ${{ matrix.name }}
+
+  update-homebrew:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get version
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Download binaries and compute checksums
+        id: checksums
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+          BASE_URL="https://github.com/wellwright-labs/devex/releases/download/v${VERSION}"
+
+          MACOS_ARM64=$(curl -fsSL "${BASE_URL}/devex-macos-arm64" | sha256sum | cut -d' ' -f1)
+          MACOS_X64=$(curl -fsSL "${BASE_URL}/devex-macos-x64" | sha256sum | cut -d' ' -f1)
+          LINUX_ARM64=$(curl -fsSL "${BASE_URL}/devex-linux-arm64" | sha256sum | cut -d' ' -f1)
+          LINUX_X64=$(curl -fsSL "${BASE_URL}/devex-linux-x64" | sha256sum | cut -d' ' -f1)
+
+          echo "macos_arm64=${MACOS_ARM64}" >> $GITHUB_OUTPUT
+          echo "macos_x64=${MACOS_X64}" >> $GITHUB_OUTPUT
+          echo "linux_arm64=${LINUX_ARM64}" >> $GITHUB_OUTPUT
+          echo "linux_x64=${LINUX_X64}" >> $GITHUB_OUTPUT
+
+      - name: Update Homebrew formula
+        env:
+          HOMEBREW_TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          VERSION=${{ steps.version.outputs.version }}
+
+          git clone https://x-access-token:${HOMEBREW_TAP_TOKEN}@github.com/wellwright-labs/homebrew-devex.git
+          cd homebrew-devex
+
+          cat > Formula/devex.rb << 'EOF'
+          class Devex < Formula
+            desc "CLI for structured developer self-experimentation"
+            homepage "https://github.com/wellwright-labs/devex"
+            version "VERSION_PLACEHOLDER"
+            license "MIT"
+
+            on_macos do
+              on_arm do
+                url "https://github.com/wellwright-labs/devex/releases/download/v#{version}/devex-macos-arm64"
+                sha256 "MACOS_ARM64_PLACEHOLDER"
+              end
+              on_intel do
+                url "https://github.com/wellwright-labs/devex/releases/download/v#{version}/devex-macos-x64"
+                sha256 "MACOS_X64_PLACEHOLDER"
+              end
+            end
+
+            on_linux do
+              on_arm do
+                url "https://github.com/wellwright-labs/devex/releases/download/v#{version}/devex-linux-arm64"
+                sha256 "LINUX_ARM64_PLACEHOLDER"
+              end
+              on_intel do
+                url "https://github.com/wellwright-labs/devex/releases/download/v#{version}/devex-linux-x64"
+                sha256 "LINUX_X64_PLACEHOLDER"
+              end
+            end
+
+            def install
+              binary_name = stable.url.split("/").last
+              bin.install binary_name => "devex"
+            end
+
+            test do
+              assert_match "devex v#{version}", shell_output("#{bin}/devex --version")
+            end
+          end
+          EOF
+
+          sed -i "s/VERSION_PLACEHOLDER/${VERSION}/" Formula/devex.rb
+          sed -i "s/MACOS_ARM64_PLACEHOLDER/${{ steps.checksums.outputs.macos_arm64 }}/" Formula/devex.rb
+          sed -i "s/MACOS_X64_PLACEHOLDER/${{ steps.checksums.outputs.macos_x64 }}/" Formula/devex.rb
+          sed -i "s/LINUX_ARM64_PLACEHOLDER/${{ steps.checksums.outputs.linux_arm64 }}/" Formula/devex.rb
+          sed -i "s/LINUX_X64_PLACEHOLDER/${{ steps.checksums.outputs.linux_x64 }}/" Formula/devex.rb
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add Formula/devex.rb
+          git commit -m "Update devex to v${VERSION}"
+          git push
