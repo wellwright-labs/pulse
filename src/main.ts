@@ -80,12 +80,8 @@ async function main(): Promise<void> {
 
   const commandName = baseArgs._[0]?.toString() as CommandName | undefined;
 
-  if (baseArgs.help && !commandName) {
-    showHelp();
-    return;
-  }
-
-  if (!commandName) {
+  // Handle help as a command (same as --help)
+  if (commandName === "help" || baseArgs.help && !commandName || !commandName) {
     showHelp();
     return;
   }
