@@ -78,13 +78,15 @@ async function main(): Promise<void> {
     return;
   }
 
-  const commandName = baseArgs._[0]?.toString() as CommandName | undefined;
+  const rawCommand = baseArgs._[0]?.toString();
 
   // Handle help as a command (same as --help)
-  if (commandName === "help" || baseArgs.help && !commandName || !commandName) {
+  if (rawCommand === "help" || baseArgs.help || !rawCommand) {
     showHelp();
     return;
   }
+
+  const commandName = rawCommand as CommandName;
 
   // Route to command
   const command = commands[commandName];
