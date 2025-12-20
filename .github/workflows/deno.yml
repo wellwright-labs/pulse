@@ -37,5 +37,11 @@ jobs:
       - name: Run linter
         run: deno lint
 
+      - name: Type check
+        run: deno check src/main.ts
+
       - name: Run tests
         run: deno test -A
+
+      - name: Build
+        run: deno compile --allow-read --allow-write --allow-run --allow-env --output dist/devex src/main.ts
